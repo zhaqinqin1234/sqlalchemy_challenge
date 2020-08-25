@@ -14,7 +14,7 @@ engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 Base = automap_base()
 Base.prepare(engine, reflect = True)
 
-
+# metadata.create_all(bind=engine)
 Measurement = Base.classes.measurement
 Station = Base.classes.station
 
@@ -53,9 +53,9 @@ def stations():
 
 @app.route("/api/v1.0/tobs")
 def temp_monthly():
-    previous_year = dt.date(2017, 8, 23) - dt.timedelta(days=365)
+    previous_year1 = dt.date(2017, 8, 23) - dt.timedelta(days=365)
     result = session.query(Measurement.tobs).filter(Measurement.station =='USC00519281').\
-        filter(Measurement.date >= previous_year).all()
+        filter(Measurement.date >= previous_year1).all()
     temps = list(np.ravel(result))
 
     return jsonify(temps)
